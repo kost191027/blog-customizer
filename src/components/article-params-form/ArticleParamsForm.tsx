@@ -1,9 +1,12 @@
 import { useRef, useState } from 'react';
+import clsx from 'clsx';
+
 import { ArrowButton } from 'src/ui/arrow-button';
 import { Button } from 'src/ui/button';
 import { Select } from 'src/ui/select';
 import { RadioGroup } from 'src/ui/radio-group';
 import { Separator } from 'src/ui/separator';
+import { Text } from 'src/ui/text';
 import {
 	ArticleStateType,
 	backgroundColors,
@@ -44,12 +47,16 @@ export const ArticleParamsForm = ({ onApply }: ArticleParamsFormProps) => {
 		<>
 			<ArrowButton isOpen={isOpen} onClick={() => setIsOpen((v) => !v)} />
 			<aside
-				className={`${styles.container} ${isOpen ? styles.container_open : ''}`}
+				className={clsx(styles.container, isOpen && styles.container_open)}
 				ref={panelRef as unknown as React.RefObject<HTMLDivElement>}>
 				<form
 					className={styles.form}
 					onSubmit={handleSubmit}
 					onReset={handleReset}>
+					<Text as='h2' size={31} weight={800} uppercase>
+						Задайте параметры
+					</Text>
+
 					<Select
 						title='Шрифт'
 						selected={formState.fontFamilyOption}
@@ -59,19 +66,15 @@ export const ArticleParamsForm = ({ onApply }: ArticleParamsFormProps) => {
 						}
 					/>
 
-					<Separator />
-
 					<RadioGroup
 						title='Размер шрифта'
 						name='font-size'
-						options={fontSizeOptions}
 						selected={formState.fontSizeOption}
+						options={fontSizeOptions}
 						onChange={(opt) =>
 							setFormState((s) => ({ ...s, fontSizeOption: opt }))
 						}
 					/>
-
-					<Separator />
 
 					<Select
 						title='Цвет шрифта'
@@ -91,13 +94,10 @@ export const ArticleParamsForm = ({ onApply }: ArticleParamsFormProps) => {
 						}
 					/>
 
-					<Separator />
-
-					<RadioGroup
+					<Select
 						title='Ширина контента'
-						name='content-width'
-						options={contentWidthArr}
 						selected={formState.contentWidth}
+						options={contentWidthArr}
 						onChange={(opt) =>
 							setFormState((s) => ({ ...s, contentWidth: opt }))
 						}

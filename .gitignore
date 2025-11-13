@@ -20,3 +20,6 @@ dist
 .yarn
 
 storybook-static
+
+# Local Warp AI rules should not be committed
+WARP.md
